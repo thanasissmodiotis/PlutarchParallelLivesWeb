@@ -1,0 +1,46 @@
+{name, birthId, deathId, status}	2002-01-28 01:30:31	2002-02-25 10:08:46	2002-02-26 07:16:47	2002-02-28 09:40:43	2002-02-28 13:08:45	2002-03-01 09:39:34	2002-04-26 22:40:13	2002-04-29 23:02:33	2002-09-04 18:38:36	2002-09-11 01:53:52	2002-09-12 07:58:48	2002-09-23 07:22:26	2002-10-02 01:09:12	2002-10-08 00:26:18	2002-10-14 18:19:36	2002-10-18 02:25:10	2002-10-23 09:41:15	2002-11-11 19:17:11	2002-11-25 08:34:54	2003-02-17 07:52:54	2003-02-17 09:50:35	2003-02-18 21:23:07	2003-02-18 22:01:32	2003-02-19 01:40:09	2003-02-19 03:45:47	2003-02-19 21:52:41	2003-02-20 00:00:02	2003-03-12 10:34:49	2003-03-12 10:52:15	2003-03-17 07:35:39	2003-03-18 06:05:54	2003-03-18 21:01:32	2003-04-02 08:08:55	2003-04-08 14:58:23	2003-05-27 22:15:13	2003-06-01 08:32:56	2003-06-01 21:03:04	2003-06-05 03:15:14	2004-10-04 01:26:36	2004-11-04 01:49:41	2005-04-18 05:21:38	2008-02-21 04:46:33	2008-02-21 17:09:07	2008-02-23 02:12:05	2008-02-23 02:22:05	2008-08-01 04:17:56	2012-09-10 10:18:40
+{biodatabase,0,46,1}									1															3																								
+{bioentry,0,46,1}										2	2					1	1					2		3																						1		
+{bioentry_date,0,2,0}																																																
+{bioentry_dblink,10,22,0}												3																																				
+{bioentry_dbxref,23,46,1}																									1																							
+{bioentry_description,0,2,0}																																																
+{bioentry_direct_links,0,9,0}				3																																												
+{bioentry_keywords,0,2,0}																																																
+{bioentry_path,24,46,1}																												2					4	4														
+{bioentry_qualifier_value,3,46,1}											1							1				4						2																				
+{bioentry_reference,0,46,1}											1											6																										
+{bioentry_relationship,17,46,1}																						6						2						4														
+{bioentry_taxa,0,9,0}																																																
+{biosequence,0,46,1}				1							6					1	1					6		3	1	2																						
+{cache_corba_support,0,31,0}																																																
+{comment,0,46,1}											2											2																										
+{dbxref,3,46,1}																1						1																								1		
+{dbxref_qualifier_value,3,46,1}											1											2			1			2			4																	
+{location,27,46,1}																																																
+{location_qualifier_value,0,46,1}		2		2							3											4						4																				
+{ontology,21,46,1}																																																
+{ontology_dbxref,21,26,0}																											1																					
+{ontology_path,21,27,0}																																																
+{ontology_relationship,21,27,0}																									1																							
+{ontology_term,3,26,0}									1		2		1									8																										
+{reference,0,46,1}				1							3								2	4	2	10																										
+{remote_seqfeature_name,0,15,0}											1																																					
+{seqfeature,0,46,1}											2	2	2						1			3		4																								
+{seqfeature_dbxref,26,46,1}																																																
+{seqfeature_key,0,2,0}																																																
+{seqfeature_location,0,26,0}											2						2					8																										
+{seqfeature_path,24,46,1}																												2					4	4														
+{seqfeature_qualifier,0,2,0}																																																
+{seqfeature_qualifier_value,0,46,1}				4							2											4						2																				
+{seqfeature_relationship,5,46,1}											5											6						2						4														
+{seqfeature_source,0,11,0}																																																
+{taxa,0,9,0}									1																																							
+{taxon,10,46,1}														1								10	6	2																								
+{taxon_name,21,46,1}																								1																								
+{term,27,46,1}																														1																		
+{term_dbxref,27,46,1}																																																
+{term_path,28,46,1}																																	5															
+{term_relationship,28,46,1}																																																
+{term_relationship_term,38,46,1}																																																
+{term_synonym,29,46,1}																																																

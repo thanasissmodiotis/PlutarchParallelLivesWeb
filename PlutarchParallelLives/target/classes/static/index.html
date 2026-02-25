@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallel Lives Diagram</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #475569;
+            --accent: #0891b2;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --dark: #0f172a;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --radius: 6px;
+            --radius-sm: 4px;
+            --radius-lg: 8px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #e2e8f0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--gray-900);
+            color: white;
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            opacity: 0.6;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .toolbar {
+            background: var(--gray-50);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .toolbar-section {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .toolbar-section label {
+            font-weight: 500;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        button {
+            padding: 8px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            color: var(--gray-700);
+        }
+
+        button:hover:not(:disabled) {
+            border-color: var(--gray-400);
+            background: var(--gray-50);
+        }
+
+        button:active:not(:disabled) {
+            background: var(--gray-100);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--gray-700);
+            color: white;
+            border-color: var(--gray-700);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--gray-800);
+            border-color: var(--gray-800);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #047857;
+            border-color: #047857;
+        }
+
+        .btn-danger {
+            background: white;
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: var(--danger);
+            color: white;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-input-label {
+            padding: 8px 14px;
+            background: var(--primary);
+            color: #ffffff !important;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            border: 1px solid var(--primary);
+        }
+
+        .file-input-label:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: #ffffff !important;
+        }
+
+        .file-input-label.folder-btn {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #ffffff !important;
+        }
+
+        .file-input-label.folder-btn:hover {
+            background: var(--gray-700);
+            border-color: var(--gray-700);
+            color: #ffffff !important;
+        }
+
+        select {
+            padding: 8px 32px 8px 10px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: var(--gray-100);
+        }
+
+        .content {
+            padding: 20px;
+            background: white;
+        }
+
+        .info-section {
+            background: var(--gray-50);
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            display: none;
+            border: 1px solid var(--gray-200);
+        }
+
+        .info-section.show {
+            display: block;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        #diagramContainer {
+            overflow: auto;
+            border: 1px solid var(--gray-500);
+            border-radius: var(--radius);
+            background: white;
+            max-height: 600px;
+        }
+
+        #pldTable {
+            border-collapse: collapse;
+            width: auto;
+            min-width: 100%;
+        }
+
+        #pldTable th,
+        #pldTable td {
+            border: 1px solid var(--gray-500);
+            text-align: center;
+            padding: 0;
+            height: 26px;
+            min-width: 26px;
+        }
+
+        #pldTable th {
+            background: var(--gray-100);
+            font-weight: 600;
+            font-size: 10px;
+            color: var(--gray-700);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 2px solid var(--gray-600);
+        }
+
+        #pldTable th:first-child {
+            min-width: 120px;
+            left: 0;
+            z-index: 11;
+            background: var(--gray-200);
+        }
+
+        #pldTable td:first-child {
+            min-width: 120px;
+            font-weight: 500;
+            font-size: 10px;
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            background: white;
+            border-right: 2px solid var(--gray-600);
+            text-align: left;
+            padding-left: 8px;
+        }
+
+        #pldTable td.alive {
+            background: #dbeafe;
+            color: var(--gray-800);
+        }
+
+        #pldTable td.dead {
+            background: #fee2e2;
+            color: var(--gray-800);
+        }
+
+        #pldTable td.cell {
+            cursor: pointer;
+            transition: opacity 0.1s;
+        }
+
+        #pldTable td.cell:hover {
+            opacity: 0.7;
+            outline: 2px solid var(--gray-900);
+            outline-offset: -2px;
+        }
+
+        .pattern-legend {
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: var(--gray-50);
+            border-radius: var(--radius);
+            display: none;
+            border: 1px solid var(--gray-200);
+        }
+
+        .pattern-legend.show {
+            display: block;
+        }
+
+        .pattern-legend h3 {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--gray-700);
+        }
+
+        .pattern-items {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pattern-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pattern-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .pattern-label {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            background: var(--gray-900);
+            color: white;
+            padding: 18px 24px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .modal-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--gray-700);
+            font-size: 13px;
+        }
+
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.15s;
+        }
+
+        .form-group input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .slider-group {
+            margin-top: 10px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--gray-500);
+            margin-top: 6px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--gray-300);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .weight-display {
+            display: flex;
+            gap: 24px;
+            font-size: 13px;
+            color: var(--gray-700);
+            margin-top: 12px;
+        }
+
+        .weight-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 16px;
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--gray-200);
+        }
+
+        .weight-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--gray-500);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .weight-value {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--gray-800);
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            background: var(--gray-50);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 48px;
+            color: var(--gray-500);
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 2px solid var(--gray-200);
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-500);
+        }
+
+        .empty-state h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: var(--gray-700);
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: #b91c1c;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
+            display: none;
+            border: 1px solid #fecaca;
+            font-size: 13px;
+        }
+
+        .error-message.show {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
+            display: none;
+            border: 1px solid #bbf7d0;
+            font-size: 13px;
+        }
+
+        .success-message.show {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .debug-info {
+            background: #fffbeb;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            color: #92400e;
+            display: none;
+            border: 1px solid #fde68a;
+        }
+
+        .debug-info.show {
+            display: block;
+        }
+
+        .help-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-800);
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 0.15s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-btn:hover {
+            background: var(--gray-900);
+            transform: translateY(-2px);
+        }
+
+        .help-modal .modal-content {
+            max-width: 600px;
+        }
+
+        .help-modal .modal-body {
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+
+        .help-section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .help-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .help-section h3 {
+            color: var(--gray-800);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .help-section p {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .help-section ul {
+            margin-left: 20px;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        .help-section li {
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .help-code {
+            background: var(--gray-900);
+            color: var(--gray-100);
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 16px 20px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .toolbar {
+                padding: 10px 14px;
+            }
+
+            .content {
+                padding: 14px;
+            }
+
+            .toolbar-section {
+                flex-wrap: wrap;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10px;
+            }
+        }
+
+        /* ============ CELL TOOLTIP ============ */
+        .cell-tooltip {
+            position: fixed;
+            z-index: 10000;
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            padding: 0;
+            min-width: 280px;
+            max-width: 380px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease, visibility 0.15s ease;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .cell-tooltip.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .tooltip-header {
+            background: var(--gray-900);
+            color: white;
+            padding: 10px 14px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tooltip-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0 4px;
+            opacity: 0.7;
+            transition: opacity 0.15s;
+        }
+
+        .tooltip-close:hover {
+            opacity: 1;
+        }
+
+        .tooltip-body {
+            padding: 12px 14px;
+        }
+
+        .tooltip-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 12px;
+        }
+
+        .tooltip-section .label {
+            color: var(--gray-500);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+        }
+
+        .tooltip-section .value {
+            font-weight: 500;
+            text-align: right;
+            color: var(--gray-800);
+            word-break: break-word;
+        }
+
+        .tooltip-divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 10px 0;
+        }
+
+        .tooltip-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-birth { background: #dbeafe; color: #1d4ed8; }
+        .status-death { background: #fee2e2; color: #dc2626; }
+        .status-active { background: #dcfce7; color: #16a34a; }
+        .status-inactive { background: var(--gray-100); color: var(--gray-500); }
+
+        .tooltip-pattern {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: #fff7ed;
+            color: #c2410c;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .tooltip-breakdown {
+            margin-top: 8px;
+        }
+
+        .tooltip-breakdown-title {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-entity {
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .breakdown-value {
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .tooltip-loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray-500);
+        }
+
+        .tooltip-loading::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--gray-300);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* Make cells show pointer cursor when hoverable */
+        .diagram-table td:not(:first-child) {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Parallel Lives Diagram</h1>
+            <p>Entity evolution visualization and analysis</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="toolbar-section">
+                <label class="file-input-label" for="fileInput">Load File</label>
+                <input type="file" id="fileInput" accept=".tsv,.csv">
+                
+                <label class="file-input-label folder-btn" for="folderInput">Load Folder</label>
+                <input type="file" id="folderInput" webkitdirectory directory multiple>
+                
+                <span id="fileName" style="font-size: 11px; color: var(--gray-500);"></span>
+            </div>
+
+            <div class="toolbar-section">
+                <button id="clusterBtn" class="btn-primary" disabled>Configure Clustering</button>
+                <button id="showDiagramBtn" class="btn-success" disabled>Show Diagram</button>
+            </div>
+
+            <div class="toolbar-section">
+                <label>Measurement:</label>
+                <select id="measurementSelect" disabled>
+                    <option value="">Loading...</option>
+                </select>
+            </div>
+
+            <div class="toolbar-section">
+                <label>Aggregation:</label>
+                <select id="aggregationSelect" disabled>
+                    <option value="">Loading...</option>
+                </select>
+            </div>
+
+            <div class="toolbar-section">
+                <label>Sort:</label>
+                <select id="sortSelect" disabled>
+                    <option value="">Select...</option>
+                    <option value="BIRTH_ASCENDING">Birth (Asc)</option>
+                    <option value="BIRTH_DESCENDING">Birth (Desc)</option>
+                    <option value="ACTIVITY_ASCENDING">Activity (Asc)</option>
+                    <option value="ACTIVITY_DESCENDING">Activity (Desc)</option>
+                    <option value="LIFE_DURATION_ASCENDING">Duration (Asc)</option>
+                    <option value="LIFE_DURATION_DESCENDING">Duration (Desc)</option>
+                </select>
+            </div>
+
+            <div class="toolbar-section">
+                <label>Patterns:</label>
+                <select id="patternSelect" disabled>
+                    <option value="NO_TYPE">None</option>
+                    <option value="ALL_PATTERNS">All Patterns</option>
+                    <option value="MULTIPLE_BIRTHS">Multiple Births</option>
+                    <option value="MULTIPLE_UPDATES">Multiple Updates</option>
+                    <option value="MULTIPLE_DEATHS">Multiple Deaths</option>
+                    <option value="LADDER">Ladder</option>
+                </select>
+            </div>
+
+            <div class="toolbar-section" style="margin-left: auto;">
+                <button id="saveDataBtn" class="btn-secondary" disabled>Save Data</button>
+                <button id="exportProjectBtn" class="btn-secondary" disabled>Export Project</button>
+                <button id="exportPatternsBtn" class="btn-secondary" disabled>Export Patterns</button>
+                <button id="closeProjectBtn" class="btn-danger" disabled>Close</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="debugInfo" class="debug-info"></div>
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <div id="infoSection" class="info-section">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Beats</span>
+                        <span class="info-value" id="numBeats">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Entities</span>
+                        <span class="info-value" id="numEntities">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">TEMs</span>
+                        <span class="info-value" id="numTEMs">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phases</span>
+                        <span class="info-value" id="numPhases">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Entity Groups</span>
+                        <span class="info-value" id="numEntityGroups">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <h3>No Data Loaded</h3>
+                <p>Upload a file or folder to begin</p>
+            </div>
+
+            <div id="diagramContainer" style="display: none;">
+                <table id="pldTable"></table>
+            </div>
+
+            <div id="patternLegend" class="pattern-legend">
+                <h3>Pattern Legend</h3>
+                <div class="pattern-items">
+                    <div class="pattern-item">
+                        <div class="pattern-color" style="background: #3b82f6;"></div>
+                        <span class="pattern-label">Multiple Births</span>
+                    </div>
+                    <div class="pattern-item">
+                        <div class="pattern-color" style="background: #f97316;"></div>
+                        <span class="pattern-label">Multiple Updates</span>
+                    </div>
+                    <div class="pattern-item">
+                        <div class="pattern-color" style="background: #ef4444;"></div>
+                        <span class="pattern-label">Multiple Deaths</span>
+                    </div>
+                    <div class="pattern-item">
+                        <div class="pattern-color" style="background: #d946ef;"></div>
+                        <span class="pattern-label">Ladder</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clustering Configuration Modal -->
+    <div id="clusterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Clustering Configuration</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="timeClusteringCheckbox" checked>
+                        <label for="timeClusteringCheckbox">Enable time clustering</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="timeClustering">
+                    <label for="numPhasesInput">Number of phases</label>
+                    <input type="number" id="numPhasesInput" min="1" value="5">
+                </div>
+
+                <div class="form-group" id="distanceWeights">
+                    <label>Distance weights</label>
+                    <div class="slider-container">
+                        <input type="range" id="weightSlider" min="0" max="100" value="50">
+                    </div>
+                    <div class="slider-labels">
+                        <span>Changes</span>
+                        <span>Time</span>
+                    </div>
+                    <div class="weight-display">
+                        <div class="weight-item">
+                            <span class="weight-label">Changes</span>
+                            <span class="weight-value" id="changesWeight">0.50</span>
+                        </div>
+                        <div class="weight-item">
+                            <span class="weight-label">Time</span>
+                            <span class="weight-value" id="timeWeight">0.50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 24px;">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="entityClusteringCheckbox" checked>
+                        <label for="entityClusteringCheckbox">Enable entity clustering</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="entityClustering">
+                    <label for="numEntityGroupsInput">Number of entity groups</label>
+                    <input type="number" id="numEntityGroupsInput" min="1" value="5">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelClusterBtn" class="btn-secondary">Cancel</button>
+                <button id="applyClusterBtn" class="btn-primary">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entity Details Modal -->
+    <div id="entityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Entity Group Details</h2>
+            </div>
+            <div class="modal-body">
+                <div id="entityDetails"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeEntityBtn" class="btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2>Confirm Action</h2>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage" style="font-size: 14px; color: var(--gray-700); line-height: 1.6;"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmCancelBtn" class="btn-secondary">Cancel</button>
+                <button id="confirmOkBtn" class="btn-danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Button -->
+    <button id="helpBtn" class="help-btn" title="Help">?</button>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal help-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Help</h2>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h3>Supported Input Formats</h3>
+                    <p><strong>Single Files:</strong> .tsv, .csv </p>
+                    <p><strong>Folders:</strong></p>
+                    <ul>
+                        <li><strong>Project Import:</strong> Contains tem.tsv + gpm.tsv (pre-clustered)</li>
+                        <li><strong>Schema Evolution:</strong> Contains *SchemaHeartbeat.tsv, *tables_DetailedStats.tsv, *transitions.csv</li>
+                        <li><strong>Data Folder:</strong> Any folder with .tsv or .csv files</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3>Quick Start</h3>
+                    <ul>
+                        <li>Load data using "Load File" or "Load Folder"</li>
+                        <li>Configure and apply clustering parameters</li>
+                        <li>Click "Show Diagram" to visualize</li>
+                        <li>Use dropdowns to adjust view settings</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3>Diagram Colors</h3>
+                    <ul>
+                        <li><strong>Light Blue (first column):</strong> Entity is alive</li>
+                        <li><strong>Light Red (first column):</strong> Entity is dead</li>
+                        <li><strong>Blue:</strong> Entity birth</li>
+                        <li><strong>Green shades:</strong> Active with measurements</li>
+                        <li><strong>Black:</strong> Entity death</li>
+                        <li><strong>White/Gray:</strong> Inactive period</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3>Patterns</h3>
+                    <ul>
+                        <li><strong>Multiple Births (blue):</strong> Many entities born simultaneously</li>
+                        <li><strong>Multiple Updates (orange):</strong> High concurrent update activity</li>
+                        <li><strong>Multiple Deaths (red):</strong> Many entities dying together</li>
+                        <li><strong>Ladder (magenta):</strong> Sequential lifecycle pattern</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3>Keyboard Shortcuts</h3>
+                    <ul>
+                        <li><strong>Ctrl + S:</strong> Save data</li>
+                        <li><strong>Ctrl + E:</strong> Export project</li>
+                        <li><strong>Shift + ?:</strong> Open help</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeHelpBtn" class="btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+        const DEBUG_MODE = true;
+        
+        let currentProjectId = null;
+        let currentChartData = null;
+        let currentPhases = null;
+        let currentPatterns = null;
+        let projectInfo = null;
+
+        const fileInput = document.getElementById('fileInput');
+        const folderInput = document.getElementById('folderInput');
+        const fileName = document.getElementById('fileName');
+        const clusterBtn = document.getElementById('clusterBtn');
+        const showDiagramBtn = document.getElementById('showDiagramBtn');
+        const measurementSelect = document.getElementById('measurementSelect');
+        const aggregationSelect = document.getElementById('aggregationSelect');
+        const sortSelect = document.getElementById('sortSelect');
+        const patternSelect = document.getElementById('patternSelect');
+        const exportProjectBtn = document.getElementById('exportProjectBtn');
+        const exportPatternsBtn = document.getElementById('exportPatternsBtn');
+        const saveDataBtn = document.getElementById('saveDataBtn');
+        const closeProjectBtn = document.getElementById('closeProjectBtn');
+        const clusterModal = document.getElementById('clusterModal');
+        const entityModal = document.getElementById('entityModal');
+        const loading = document.getElementById('loading');
+        const emptyState = document.getElementById('emptyState');
+        const infoSection = document.getElementById('infoSection');
+        const diagramContainer = document.getElementById('diagramContainer');
+        const patternLegend = document.getElementById('patternLegend');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const debugInfo = document.getElementById('debugInfo');
+        const confirmModal = document.getElementById('confirmModal');
+        
+        // Processing flags for race condition prevention
+        let isFileUploading = false;
+        let isClustering = false;
+        let confirmCallback = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            debugLog('Application initialized');
+        });
+
+        function setupEventListeners() {
+            fileInput.addEventListener('change', handleFileUpload);
+            folderInput.addEventListener('change', handleFolderUpload);
+            clusterBtn.addEventListener('click', openClusterModal);
+            document.getElementById('cancelClusterBtn').addEventListener('click', closeClusterModal);
+            document.getElementById('applyClusterBtn').addEventListener('click', applyClusteringConfig);
+
+            document.getElementById('timeClusteringCheckbox').addEventListener('change', (e) => {
+                document.getElementById('timeClustering').style.display = e.target.checked ? 'block' : 'none';
+                document.getElementById('distanceWeights').style.display = e.target.checked ? 'block' : 'none';
+            });
+
+            document.getElementById('entityClusteringCheckbox').addEventListener('change', (e) => {
+                document.getElementById('entityClustering').style.display = e.target.checked ? 'block' : 'none';
+            });
+
+            document.getElementById('weightSlider').addEventListener('input', (e) => {
+                const value = e.target.value / 100;
+                document.getElementById('changesWeight').textContent = value.toFixed(2);
+                document.getElementById('timeWeight').textContent = (1 - value).toFixed(2);
+            });
+
+            showDiagramBtn.addEventListener('click', fetchAndDisplayDiagram);
+            measurementSelect.addEventListener('change', handleMeasurementChange);
+            aggregationSelect.addEventListener('change', handleAggregationChange);
+            sortSelect.addEventListener('change', handleSort);
+            patternSelect.addEventListener('change', handlePatternChange);
+            exportProjectBtn.addEventListener('click', handleExportProject);
+            exportPatternsBtn.addEventListener('click', exportPatterns);
+            saveDataBtn.addEventListener('click', handleSaveData);
+            closeProjectBtn.addEventListener('click', handleCloseProject);
+            document.getElementById('closeEntityBtn').addEventListener('click', closeEntityModal);
+            document.getElementById('helpBtn').addEventListener('click', openHelpModal);
+            document.getElementById('closeHelpBtn').addEventListener('click', closeHelpModal);
+
+            window.addEventListener('click', (e) => {
+                if (e.target === clusterModal) closeClusterModal();
+                if (e.target === entityModal) closeEntityModal();
+                if (e.target === document.getElementById('helpModal')) closeHelpModal();
+                if (e.target === confirmModal) closeConfirmModal();
+            });
+
+            // Confirmation modal buttons
+            document.getElementById('confirmCancelBtn').addEventListener('click', closeConfirmModal);
+            document.getElementById('confirmOkBtn').addEventListener('click', executeConfirmAction);
+
+            window.addEventListener('beforeunload', cleanupProject);
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+        }
+
+        function handleKeyboardShortcuts(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                if (!saveDataBtn.disabled) handleSaveData();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                e.preventDefault();
+                if (!exportProjectBtn.disabled) handleExportProject();
+            }
+            if (e.key === 'Escape') {
+                closeClusterModal();
+                closeEntityModal();
+                closeHelpModal();
+                closeConfirmModal();
+            }
+            if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
+                const activeElement = document.activeElement;
+                if (activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    openHelpModal();
+                }
+            }
+        }
+
+        // ============ CONFIRMATION MODAL ============
+
+        function showConfirmModal(message, callback) {
+            document.getElementById('confirmMessage').textContent = sanitizeInput(message);
+            confirmCallback = callback;
+            confirmModal.classList.add('show');
+        }
+
+        function closeConfirmModal() {
+            confirmModal.classList.remove('show');
+            confirmCallback = null;
+        }
+
+        function executeConfirmAction() {
+            if (confirmCallback) {
+                const callback = confirmCallback;
+                closeConfirmModal();
+                callback();
+            }
+        }
+
+        // ============ INPUT SANITIZATION ============
+
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return input;
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+
+        function sanitizeFilename(filename) {
+            if (!filename) return 'unknown';
+            // Remove path separators and dangerous characters
+            return filename.replace(/[\/\\:*?"<>|]/g, '_').substring(0, 255);
+        }
+
+        // ============ PROJECT CLEANUP ============
+
+        async function cleanupProject() {
+            if (currentProjectId) {
+                try {
+                    navigator.sendBeacon(`${API_BASE_URL}/projects/${currentProjectId}/cleanup`, '');
+                    debugLog('Project cleanup sent');
+                } catch (err) {
+                    console.error('Cleanup failed:', err);
+                }
+            }
+        }
+
+        async function handleCloseProject() {
+            if (!currentProjectId) return;
+            
+            // Use custom confirmation modal instead of native confirm
+            showConfirmModal('Close this project? Unsaved changes will be lost.', async () => {
+                showLoading(true);
+                try {
+                    await fetch(`${API_BASE_URL}/projects/${currentProjectId}`, { method: 'DELETE' });
+                    resetUIState();
+                    showSuccess('Project closed');
+                    debugLog('Project closed');
+                } catch (error) {
+                    showError('Failed to close project: ' + error.message);
+                } finally {
+                    showLoading(false);
+                }
+            });
+        }
+
+        async function handleSaveData() {
+            if (!currentProjectId) return;
+            
+            // Prevent double-click
+            if (saveDataBtn.dataset.processing === 'true') return;
+            saveDataBtn.dataset.processing = 'true';
+            
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE_URL}/projects/${currentProjectId}/saveData`, { method: 'POST' });
+                
+                if (!response.ok) {
+                    try {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || 'Failed to save data');
+                    } catch (e) {
+                        if (e.message) throw e;
+                        throw new Error('Failed to save data');
+                    }
+                }
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'data-export.tsv';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+                
+                showSuccess('Data saved');
+                debugLog('Data exported');
+            } catch (error) {
+                showError('Failed to save data: ' + error.message);
+            } finally {
+                showLoading(false);
+                saveDataBtn.dataset.processing = 'false';
+            }
+        }
+
+        function resetUIState() {
+            currentProjectId = null;
+            currentChartData = null;
+            currentPhases = null;
+            currentPatterns = null;
+            projectInfo = null;
+            
+            // Clear tooltip cache when project is reset
+            clearTooltipCache();
+            
+            clusterBtn.disabled = true;
+            showDiagramBtn.disabled = true;
+            measurementSelect.disabled = true;
+            aggregationSelect.disabled = true;
+            sortSelect.disabled = true;
+            patternSelect.disabled = true;
+            exportProjectBtn.disabled = true;
+            exportPatternsBtn.disabled = true;
+            saveDataBtn.disabled = true;
+            closeProjectBtn.disabled = true;
+            
+            fileName.textContent = '';
+            document.getElementById('numBeats').textContent = '-';
+            document.getElementById('numEntities').textContent = '-';
+            document.getElementById('numTEMs').textContent = '-';
+            document.getElementById('numPhases').textContent = '-';
+            document.getElementById('numEntityGroups').textContent = '-';
+            
+            infoSection.style.display = 'none';
+            diagramContainer.style.display = 'none';
+            patternLegend.classList.remove('show');
+            emptyState.style.display = 'block';
+            
+            document.getElementById('pldTable').innerHTML = '';
+        }
+
+        function debugLog(message, data = null) {
+            if (DEBUG_MODE) {
+                console.log(`[DEBUG] ${message}`, data || '');
+                const timestamp = new Date().toLocaleTimeString();
+                debugInfo.textContent = `[${timestamp}] ${message}`;
+                debugInfo.classList.add('show');
+            }
+        }
+
+        async function createProject() {
+            const url = `${API_BASE_URL}/projects`;
+            debugLog('Creating project', { url });
+            
+            const response = await fetch(url, { method: 'POST' });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            debugLog('Project created', data);
+            return data.projectId;
+        }
+
+        async function loadFile(projectId, file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/load`;
+            debugLog('Loading file', { url, projectId, fileName: file.name });
+
+            const response = await fetch(url, { method: 'POST', body: formData });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to load file: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function loadSchemaEvoFolder(projectId, heartbeat, tables, transitions) {
+            const formData = new FormData();
+            formData.append('heartbeat', heartbeat);
+            formData.append('tables', tables);
+            formData.append('transitions', transitions);
+            
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/loadSchemaEvo`;
+            debugLog('Loading Schema Evolution folder', { url, projectId });
+
+            const response = await fetch(url, { method: 'POST', body: formData });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to load folder: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function importProject(projectId, temFile, gpmFile) {
+            const formData = new FormData();
+            formData.append('tem', temFile);
+            formData.append('gpm', gpmFile);
+            
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/importProject`;
+            debugLog('Importing project', { url, projectId });
+
+            const response = await fetch(url, { method: 'POST', body: formData });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to import project: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function exportProjectFile(projectId) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/exportProject`;
+            debugLog('Exporting project', { url, projectId });
+            
+            const response = await fetch(url, { method: 'POST' });
+
+            if (!response.ok) {
+                try {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to export project');
+                } catch (e) {
+                    if (e.message) throw e;
+                    throw new Error('Failed to export project');
+                }
+            }
+
+            const blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = 'project-export.zip';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(downloadUrl);
+            document.body.removeChild(a);
+        }
+
+        async function clusterData(projectId, config) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/cluster`;
+            debugLog('Clustering data', { url, projectId, config });
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(config)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to cluster: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function getMeasurementTypes(projectId) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/measurementTypes`;
+            debugLog('Fetching measurement types', { url, projectId });
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to fetch measurement types: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function generateChartData(projectId, measurementType, aggregationType) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/chartData/generate`;
+            debugLog('Generating chart data', { url, projectId, measurementType, aggregationType });
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ measurementType, aggregationType })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to generate chart data: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function getChartData(projectId) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/chartData`;
+            debugLog('Fetching chart data', { url, projectId });
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to fetch chart data: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function sortData(projectId, sortType) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/sort?sortType=${encodeURIComponent(sortType)}`;
+            debugLog('Sorting data', { url, projectId, sortType });
+            
+            const response = await fetch(url, { method: 'POST' });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to sort: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function getPatterns(projectId, patternType) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/patterns?patternType=${encodeURIComponent(patternType)}`;
+            debugLog('Fetching patterns', { url, projectId, patternType });
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to fetch patterns: ${errorText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function exportPatternsFile(projectId) {
+            const url = `${API_BASE_URL}/projects/${encodeURIComponent(projectId)}/patterns/export`;
+            debugLog('Exporting patterns', { url, projectId });
+            
+            const response = await fetch(url, { method: 'POST' });
+
+            if (!response.ok) {
+                try {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to export patterns');
+                } catch (e) {
+                    if (e.message) throw e;
+                    throw new Error('Failed to export patterns');
+                }
+            }
+
+            const blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = 'patterns.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(downloadUrl);
+            document.body.removeChild(a);
+        }
+
+        async function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Prevent concurrent uploads
+            if (isFileUploading) {
+                showError('Please wait for the current upload to complete.');
+                e.target.value = '';
+                return;
+            }
+
+            isFileUploading = true;
+            const safeFileName = sanitizeFilename(file.name);
+            fileName.textContent = safeFileName;
+            showLoading(true);
+            hideError();
+            hideSuccess();
+
+            try {
+                currentProjectId = await createProject();
+                debugLog('Project ID stored', { currentProjectId });
+
+                projectInfo = await loadFile(currentProjectId, file);
+                debugLog('File loaded', projectInfo);
+
+                updateInfoSection(projectInfo);
+                infoSection.classList.add('show');
+                clusterBtn.disabled = false;
+                closeProjectBtn.disabled = false;
+                emptyState.style.display = 'none';
+
+                document.getElementById('numPhasesInput').value = projectInfo.numberOfBeats;
+                document.getElementById('numEntityGroupsInput').value = projectInfo.numberOfEntities;
+
+                showSuccess('File loaded');
+            } catch (error) {
+                showError('Error loading file: ' + sanitizeInput(error.message));
+                console.error('File upload error:', error);
+                currentProjectId = null;
+            } finally {
+                showLoading(false);
+                isFileUploading = false;
+                e.target.value = ''; // Reset input for re-upload of same file
+            }
+        }
+
+        async function handleFolderUpload(e) {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            // Prevent concurrent uploads
+            if (isFileUploading) {
+                showError('Please wait for the current upload to complete.');
+                e.target.value = '';
+                return;
+            }
+
+            isFileUploading = true;
+            const folderName = sanitizeFilename(files[0].webkitRelativePath.split('/')[0]);
+            fileName.textContent = `${folderName} (${files.length} files)`;
+            
+            showLoading(true);
+            hideError();
+            hideSuccess();
+
+            try {
+                const findFileByName = (fileName) => {
+                    return files.find(f => {
+                        const name = f.name || f.webkitRelativePath.split('/').pop();
+                        return name === fileName;
+                    });
+                };
+
+                const temFile = findFileByName('tem.tsv');
+                const gpmFile = findFileByName('gpm.tsv');
+
+                if (temFile && gpmFile) {
+                    debugLog('Project import detected (tem.tsv + gpm.tsv)');
+
+                    currentProjectId = await createProject();
+                    projectInfo = await importProject(currentProjectId, temFile, gpmFile);
+                    debugLog('Project imported', projectInfo);
+
+                    updateInfoSection(projectInfo);
+                    document.getElementById('numPhases').textContent = projectInfo.numberOfPhases;
+                    document.getElementById('numEntityGroups').textContent = projectInfo.numberOfEntityGroups;
+
+                    await loadMeasurementTypes();
+
+                    showDiagramBtn.disabled = false;
+                    sortSelect.disabled = false;
+                    patternSelect.disabled = false;
+                    exportPatternsBtn.disabled = false;
+                    exportProjectBtn.disabled = false;
+                    saveDataBtn.disabled = false;
+                    closeProjectBtn.disabled = false;
+                    measurementSelect.disabled = false;
+                    aggregationSelect.disabled = false;
+
+                    showSuccess('Project imported (pre-clustered)');
+                } 
+                else {
+                    const heartbeatFile = files.find(f => f.name.endsWith('SchemaHeartbeat.tsv'));
+                    const tablesFile = files.find(f => f.name.endsWith('tables_DetailedStats.tsv'));
+                    const transitionsFile = files.find(f => f.name.endsWith('transitions.csv'));
+
+                    debugLog('Searching for schema evolution files', {
+                        heartbeat: heartbeatFile ? heartbeatFile.name : 'NOT FOUND',
+                        tables: tablesFile ? tablesFile.name : 'NOT FOUND',
+                        transitions: transitionsFile ? transitionsFile.name : 'NOT FOUND',
+                        totalFiles: files.length
+                    });
+
+                    if (heartbeatFile && tablesFile && transitionsFile) {
+                        debugLog('Schema Evolution folder detected');
+
+                        currentProjectId = await createProject();
+                        projectInfo = await loadSchemaEvoFolder(
+                            currentProjectId,
+                            heartbeatFile,
+                            tablesFile,
+                            transitionsFile
+                        );
+                        debugLog('Schema Evolution folder loaded', projectInfo);
+
+                        updateInfoSection(projectInfo);
+                        infoSection.classList.add('show');
+                        emptyState.style.display = 'none';
+
+                        document.getElementById('numPhasesInput').value = projectInfo.numberOfBeats;
+                        document.getElementById('numEntityGroupsInput').value = projectInfo.numberOfEntities;
+
+                        clusterBtn.disabled = false;
+                        closeProjectBtn.disabled = false;
+
+                        showSuccess('Schema Evolution loaded. Configure clustering to continue.');
+                    } 
+                    else {
+                        const dataFile = files.find(f => 
+                            f.name.endsWith('detailedPLD.tsv') || 
+                            f.name.endsWith('.tsv') ||
+                            f.name.endsWith('.csv')
+                        );
+
+                        if (!dataFile) {
+                            const fileList = files.map(f => f.name).join(', ');
+                            debugLog('No valid files found', { files: fileList });
+                            
+                            throw new Error(
+                                `No valid data found in folder.\n\n` +
+                                `Expected one of:\n` +
+                                `- Project: tem.tsv + gpm.tsv\n` +
+                                `- Schema Evolution: *SchemaHeartbeat.tsv + *tables_DetailedStats.tsv + *transitions.csv\n` +
+                                `- Or any .tsv or .csv file\n\n` +
+                                `Files found: ${files.length}`
+                            );
+                        }
+
+                        debugLog('Found data file in folder', { fileName: dataFile.name });
+
+                        currentProjectId = await createProject();
+                        projectInfo = await loadFile(currentProjectId, dataFile);
+
+                        updateInfoSection(projectInfo);
+                        infoSection.classList.add('show');
+                        emptyState.style.display = 'none';
+
+                        document.getElementById('numPhasesInput').value = projectInfo.numberOfBeats;
+                        document.getElementById('numEntityGroupsInput').value = projectInfo.numberOfEntities;
+
+                        clusterBtn.disabled = false;
+                        closeProjectBtn.disabled = false;
+
+                        showSuccess(`Loaded: ${dataFile.name}. Configure clustering to continue.`);
+                    }
+                }
+
+            } catch (error) {
+                showError('Error loading folder: ' + sanitizeInput(error.message));
+                console.error('Folder upload error:', error);
+                currentProjectId = null;
+            } finally {
+                showLoading(false);
+                isFileUploading = false;
+                e.target.value = ''; // Reset input
+            }
+        }
+
+        function openClusterModal() {
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                return;
+            }
+            clusterModal.classList.add('show');
+        }
+
+        function closeClusterModal() {
+            clusterModal.classList.remove('show');
+        }
+
+        async function applyClusteringConfig() {
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                closeClusterModal();
+                return;
+            }
+
+            const config = {
+                numberOfPhases: parseInt(document.getElementById('numPhasesInput').value),
+                numberOfEntityGroups: parseInt(document.getElementById('numEntityGroupsInput').value),
+                changesWeight: parseFloat(document.getElementById('changesWeight').textContent),
+                timeClusteringEnabled: document.getElementById('timeClusteringCheckbox').checked,
+                entityClusteringEnabled: document.getElementById('entityClusteringCheckbox').checked
+            };
+
+            debugLog('Applying clustering config', { currentProjectId, config });
+
+            closeClusterModal();
+            showLoading(true);
+            hideError();
+
+            try {
+                const result = await clusterData(currentProjectId, config);
+                debugLog('Clustering complete', result);
+                
+                // Clear tooltip cache since data has changed
+                clearTooltipCache();
+                
+                document.getElementById('numPhases').textContent = result.numberOfPhases;
+                document.getElementById('numEntityGroups').textContent = result.numberOfEntityGroups;
+
+                await loadMeasurementTypes();
+
+                showDiagramBtn.disabled = false;
+                sortSelect.disabled = false;
+                patternSelect.disabled = false;
+                exportPatternsBtn.disabled = false;
+                exportProjectBtn.disabled = false;
+                saveDataBtn.disabled = false;
+                closeProjectBtn.disabled = false;
+                measurementSelect.disabled = false;
+                aggregationSelect.disabled = false;
+
+                showSuccess('Clustering applied');
+            } catch (error) {
+                showError('Error applying clustering: ' + error.message);
+                console.error('Clustering error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function loadMeasurementTypes() {
+            try {
+                const types = await getMeasurementTypes(currentProjectId);
+                debugLog('Measurement types loaded', types);
+
+                measurementSelect.innerHTML = '';
+                types.measurementTypes.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = type.replace(/_/g, ' ');
+                    if (type === types.currentMeasurementType) option.selected = true;
+                    measurementSelect.appendChild(option);
+                });
+
+                aggregationSelect.innerHTML = '';
+                types.aggregationTypes.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = type.replace(/_/g, ' ');
+                    if (type === types.currentAggregationType) option.selected = true;
+                    aggregationSelect.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error('Error loading measurement types:', error);
+            }
+        }
+
+        async function handleMeasurementChange(e) {
+            const measurementType = e.target.value;
+            const aggregationType = aggregationSelect.value;
+            if (!measurementType || !aggregationType) return;
+            await regenerateChartData(measurementType, aggregationType);
+        }
+
+        async function handleAggregationChange(e) {
+            const aggregationType = e.target.value;
+            const measurementType = measurementSelect.value;
+            if (!measurementType || !aggregationType) return;
+            await regenerateChartData(measurementType, aggregationType);
+        }
+
+        async function regenerateChartData(measurementType, aggregationType) {
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+            
+            // Clear tooltip cache since data will change
+            clearTooltipCache();
+
+            try {
+                await generateChartData(currentProjectId, measurementType, aggregationType);
+                debugLog('Chart data regenerated');
+
+                if (diagramContainer.style.display === 'block') {
+                    await fetchAndDisplayDiagram();
+                }
+
+                showSuccess('Chart updated');
+            } catch (error) {
+                showError('Error regenerating chart: ' + error.message);
+                console.error('Regenerate error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function fetchAndDisplayDiagram() {
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                const data = await getChartData(currentProjectId);
+                currentChartData = data.chartData;
+                currentPhases = data.phases;
+
+                debugLog('Chart data fetched', { rows: currentChartData.length, phases: currentPhases.length });
+
+                renderDiagram(currentChartData, currentPhases);
+                diagramContainer.style.display = 'block';
+            } catch (error) {
+                showError('Error fetching diagram: ' + error.message);
+                console.error('Fetch diagram error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function handleSort(e) {
+            const sortType = e.target.value;
+            if (!sortType) return;
+
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                return;
+            }
+
+            debugLog('Starting sort', { currentProjectId, sortType });
+
+            showLoading(true);
+            hideError();
+
+            try {
+                await sortData(currentProjectId, sortType);
+                debugLog('Sort complete, fetching updated data');
+                
+                const data = await getChartData(currentProjectId);
+                currentChartData = data.chartData;
+                currentPhases = data.phases;
+
+                renderDiagram(currentChartData, currentPhases);
+                
+                showSuccess('Data sorted');
+            } catch (error) {
+                showError('Error sorting data: ' + error.message);
+                console.error('Sort error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function handlePatternChange(e) {
+            const patternType = e.target.value;
+            
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                if (patternType === 'ALL_PATTERNS') {
+                    const patternTypes = ['MULTIPLE_BIRTHS', 'MULTIPLE_UPDATES', 'MULTIPLE_DEATHS', 'LADDER'];
+                    const allPatternsPromises = patternTypes.map(type => getPatterns(currentProjectId, type));
+                    const allPatternsResults = await Promise.all(allPatternsPromises);
+                    
+                    currentPatterns = allPatternsResults.flat();
+                    debugLog('All patterns fetched', { count: currentPatterns.length });
+                    
+                    patternLegend.classList.add('show');
+                } else if (patternType === 'NO_TYPE') {
+                    currentPatterns = null;
+                    patternLegend.classList.remove('show');
+                } else {
+                    currentPatterns = await getPatterns(currentProjectId, patternType);
+                    debugLog('Patterns fetched', { count: currentPatterns.length });
+                    patternLegend.classList.add('show');
+                }
+
+                await fetchAndDisplayDiagram();
+            } catch (error) {
+                showError('Error fetching patterns: ' + error.message);
+                console.error('Pattern error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function handleExportProject() {
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                await exportProjectFile(currentProjectId);
+                showSuccess('Project exported');
+            } catch (error) {
+                showError('Error exporting project: ' + error.message);
+                console.error('Export project error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function exportPatterns() {
+            if (!currentProjectId) {
+                showError('No project loaded.');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                await exportPatternsFile(currentProjectId);
+                showSuccess('Patterns exported');
+            } catch (error) {
+                showError('Error exporting patterns: ' + error.message);
+                console.error('Export error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function openHelpModal() {
+            document.getElementById('helpModal').classList.add('show');
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').classList.remove('show');
+        }
+
+        function renderDiagram(chartData, phases) {
+            const table = document.getElementById('pldTable');
+            table.innerHTML = '';
+
+            const headerRow = document.createElement('tr');
+            const groupHeader = document.createElement('th');
+            groupHeader.textContent = 'Entity / Group';
+            headerRow.appendChild(groupHeader);
+
+            phases.forEach(phase => {
+                const th = document.createElement('th');
+                th.textContent = phase.phaseId;
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
+
+            chartData.forEach((row) => {
+                const tr = document.createElement('tr');
+
+                const groupCell = document.createElement('td');
+                groupCell.textContent = row.entityGroupName;
+                groupCell.className = row.isAlive ? 'alive' : 'dead';
+                groupCell.style.cursor = 'pointer';
+                groupCell.addEventListener('click', () => showEntityDetails(row));
+                groupCell.title = `Click for details: ${row.entityGroupName}`;
+                tr.appendChild(groupCell);
+
+                row.phaseMeasurements.forEach(phaseMeasurement => {
+                    const td = document.createElement('td');
+                    td.className = 'cell';
+                    td.style.backgroundColor = phaseMeasurement.color;
+                    
+                    // Override birth color to blue to distinguish from active cells
+                    if (phaseMeasurement.gpmType === 'BIRTH' || phaseMeasurement.gpmType === 'birth') {
+                        td.style.backgroundColor = '#3b82f6';
+                    }
+                    
+                    if (currentPatterns && currentPatterns.length > 0) {
+                        const patternColor = getPatternColor(row.entityGroupName, phaseMeasurement.phaseId);
+                        if (patternColor) {
+                            td.style.backgroundColor = patternColor;
+                        }
+                    }
+
+                    // Add click handler for cell details (like entity names)
+                    const entityGroupId = row.entityGroupId;
+                    const phaseId = phaseMeasurement.phaseId;
+                    
+                    td.addEventListener('click', (e) => 
+                        handleCellClick(e, entityGroupId, phaseId, row.entityGroupName));
+                    td.title = 'Click for details';
+
+                    tr.appendChild(td);
+                });
+
+                table.appendChild(tr);
+            });
+        }
+
+        function getPatternColor(entityName, phaseId) {
+            if (!currentPatterns) return null;
+
+            for (const pattern of currentPatterns) {
+                for (const cell of pattern.cells) {
+                    if (cell.entityName === entityName && cell.phaseId === phaseId) {
+                        switch (pattern.patternType) {
+                            case 'MULTIPLE_BIRTHS': return '#3b82f6';   // Blue (same as birth)
+                            case 'MULTIPLE_UPDATES': return '#f97316';  // Orange
+                            case 'MULTIPLE_DEATHS': return '#ef4444';   // Red
+                            case 'LADDER': return '#d946ef';            // Magenta/Fuchsia
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        function showEntityDetails(entityGroup) {
+            const detailsDiv = document.getElementById('entityDetails');
+            detailsDiv.innerHTML = `
+                <div style="line-height: 1.8; font-size: 13px;">
+                    <p><strong>Group ID:</strong> ${entityGroup.entityGroupId}</p>
+                    <p><strong>Name:</strong> ${entityGroup.entityGroupName}</p>
+                    <p><strong>Birth Beat:</strong> ${entityGroup.birthBeatId}</p>
+                    <p><strong>Death Beat:</strong> ${entityGroup.deathBeatId}</p>
+                    <p><strong>Duration:</strong> ${entityGroup.duration}</p>
+                    <p><strong>Status:</strong> ${entityGroup.isAlive ? 'Alive' : 'Dead'}</p>
+                </div>
+            `;
+            entityModal.classList.add('show');
+        }
+
+        function closeEntityModal() {
+            entityModal.classList.remove('show');
+        }
+
+        function updateInfoSection(info) {
+            document.getElementById('numBeats').textContent = info.numberOfBeats;
+            document.getElementById('numEntities').textContent = info.numberOfEntities;
+            document.getElementById('numTEMs').textContent = info.numberOfTEMs;
+        }
+
+        function showLoading(show) {
+            loading.classList.toggle('show', show);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => hideError(), 10000);  // 10 seconds for complex errors
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('show');
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.classList.add('show');
+            setTimeout(() => hideSuccess(), 3000);
+        }
+
+        function hideSuccess() {
+            successMessage.classList.remove('show');
+        }
+
+        // ============ CELL TOOLTIP (Interactive Cells) ============
+
+        let currentTooltipCell = null;
+        let tooltipCache = new Map(); // Cache for cell details
+
+        // Create tooltip element
+        const cellTooltip = document.createElement('div');
+        cellTooltip.id = 'cellTooltip';
+        cellTooltip.className = 'cell-tooltip';
+        document.body.appendChild(cellTooltip);
+
+        // Close tooltip when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!cellTooltip.contains(e.target) && !e.target.closest('.diagram-table td.cell')) {
+                closeCellTooltip();
+            }
+        });
+
+        async function handleCellClick(e, entityGroupId, phaseId, entityName) {
+            e.stopPropagation();
+            
+            // If clicking same cell, close tooltip
+            if (currentTooltipCell && 
+                currentTooltipCell.entityGroupId === entityGroupId && 
+                currentTooltipCell.phaseId === phaseId &&
+                cellTooltip.classList.contains('show')) {
+                closeCellTooltip();
+                return;
+            }
+            
+            currentTooltipCell = { entityGroupId, phaseId };
+            
+            // Show loading state
+            const rect = e.target.getBoundingClientRect();
+            positionTooltip(rect);
+            cellTooltip.innerHTML = '<div class="tooltip-header">📊 Cell Details <button class="tooltip-close" onclick="closeCellTooltip()">✕</button></div><div class="tooltip-loading">Loading</div>';
+            cellTooltip.classList.add('show');
+            
+            // Check cache first
+            const cacheKey = `${currentProjectId}-${entityGroupId}-${phaseId}`;
+            if (tooltipCache.has(cacheKey)) {
+                renderTooltip(tooltipCache.get(cacheKey), rect);
+                return;
+            }
+            
+            try {
+                const response = await fetch(
+                    `${API_BASE_URL}/projects/${currentProjectId}/cellDetails?` +
+                    `entityGroupId=${entityGroupId}&phaseId=${phaseId}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cell details');
+                }
+                
+                const data = await response.json();
+                
+                // Cache the result
+                tooltipCache.set(cacheKey, data);
+                
+                renderTooltip(data, rect);
+            } catch (err) {
+                console.error('Failed to fetch cell details:', err);
+                cellTooltip.innerHTML = `
+                    <div class="tooltip-header">📊 Cell Details <button class="tooltip-close" onclick="closeCellTooltip()">✕</button></div>
+                    <div class="tooltip-body" style="color: var(--danger);">Failed to load details</div>
+                `;
+            }
+        }
+
+        function closeCellTooltip() {
+            currentTooltipCell = null;
+            cellTooltip.classList.remove('show');
+        }
+
+        function positionTooltip(cellRect) {
+            const tooltipRect = cellTooltip.getBoundingClientRect();
+            const padding = 10;
+            
+            let x = cellRect.right + padding;
+            let y = cellRect.top;
+            
+            // Check if tooltip goes off right edge
+            if (x + 300 > window.innerWidth) {
+                x = cellRect.left - 300 - padding;
+            }
+            
+            // Check if tooltip goes off bottom edge
+            if (y + tooltipRect.height > window.innerHeight) {
+                y = window.innerHeight - tooltipRect.height - padding;
+            }
+            
+            // Ensure not off top
+            if (y < padding) {
+                y = padding;
+            }
+            
+            cellTooltip.style.left = `${x}px`;
+            cellTooltip.style.top = `${y}px`;
+        }
+
+        function renderTooltip(data, cellRect) {
+            const entityNames = data.entityNames || [];
+            const displayNames = entityNames.length > 3 
+                ? entityNames.slice(0, 3).join(', ') + ` (+${entityNames.length - 3} more)`
+                : entityNames.join(', ');
+            
+            const statusClass = `status-${(data.gpmType || 'inactive').toLowerCase()}`;
+            const statusLabel = formatGpmType(data.gpmType);
+            
+            let breakdownHtml = '';
+            if (data.breakdown && data.breakdown.length > 1) {
+                breakdownHtml = `
+                    <div class="tooltip-divider"></div>
+                    <div class="tooltip-breakdown">
+                        <div class="tooltip-breakdown-title">Entity Breakdown</div>
+                        ${data.breakdown.slice(0, 5).map(b => `
+                            <div class="breakdown-item">
+                                <span class="breakdown-entity" title="${sanitizeInput(b.entityName)}">${sanitizeInput(b.entityName)}</span>
+                                <span class="breakdown-value">${formatNumber(b.value)}</span>
+                            </div>
+                        `).join('')}
+                        ${data.breakdown.length > 5 ? `
+                            <div class="breakdown-item" style="color: var(--gray-400); font-style: italic;">
+                                +${data.breakdown.length - 5} more entities...
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+            
+            let patternHtml = '';
+            if (data.pattern) {
+                patternHtml = `
+                    <div class="tooltip-section">
+                        <span class="label">Pattern</span>
+                        <span class="tooltip-pattern">⚠️ ${formatPatternType(data.pattern)}</span>
+                    </div>
+                `;
+            }
+            
+            cellTooltip.innerHTML = `
+                <div class="tooltip-header">📊 Cell Details <button class="tooltip-close" onclick="closeCellTooltip()">✕</button></div>
+                <div class="tooltip-body">
+                    <div class="tooltip-section">
+                        <span class="label">Entity Group</span>
+                        <span class="value" title="${entityNames.join(', ')}">${sanitizeInput(displayNames)}</span>
+                    </div>
+                    <div class="tooltip-section">
+                        <span class="label">Phase</span>
+                        <span class="value">${data.phaseId} (beats ${data.phaseStart}–${data.phaseEnd})</span>
+                    </div>
+                    <div class="tooltip-divider"></div>
+                    <div class="tooltip-section">
+                        <span class="label">Value</span>
+                        <span class="value">${data.value !== null ? formatNumber(data.value) : '—'} (${data.aggregationType || 'SUM'})</span>
+                    </div>
+                    <div class="tooltip-section">
+                        <span class="label">Status</span>
+                        <span class="tooltip-status ${statusClass}">${statusLabel}</span>
+                    </div>
+                    ${patternHtml}
+                    <div class="tooltip-section">
+                        <span class="label">Life Span</span>
+                        <span class="value">Beat ${data.birthBeat} → ${data.isAlive ? 'Alive' : 'Beat ' + data.deathBeat}</span>
+                    </div>
+                    ${breakdownHtml}
+                </div>
+            `;
+            
+            positionTooltip(cellRect);
+        }
+
+        function formatGpmType(type) {
+            if (!type) return 'Unknown';
+            switch (type.toUpperCase()) {
+                case 'BIRTH': return 'Birth';
+                case 'DEATH': return 'Death';
+                case 'ACTIVE': return 'Active';
+                case 'INACTIVE': return 'Inactive';
+                default: return type;
+            }
+        }
+
+        function formatPatternType(type) {
+            if (!type) return '';
+            return type.replace(/_/g, ' ').toLowerCase()
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+        }
+
+        function formatNumber(num) {
+            if (num === null || num === undefined) return '—';
+            if (Number.isInteger(num)) return num.toLocaleString();
+            return num.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 });
+        }
+
+        // Clear tooltip cache when data changes
+        function clearTooltipCache() {
+            tooltipCache.clear();
+        }
+    </script>
+</body>
+</html>

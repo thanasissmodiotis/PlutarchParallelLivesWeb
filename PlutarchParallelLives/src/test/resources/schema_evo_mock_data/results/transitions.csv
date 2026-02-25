@@ -1,0 +1,12 @@
+trID;oldVer;newVer;Table;EventType;attrName;attrType;iskey;pkey;fkey
+1;1234373148.sql;1237164239.sql;t1;Insertion:NewTable;attrName;attrType;iskey;pkey;-
+2;1237164239.sql;1237208478.sql;t2;Insertion:UpdateTable;a21;VARCHAR(128);false;0;-
+3;1237208478.sql;1237218277.sql;t1;Deletion:UpdateTable;a11;INTEGER;true;0;-
+4;1237218277.sql;1237253648.sql;t2;Update:KeyChange;a22;INTEGER;true;0;-
+5;1237253648.sql;1237391769.sql;t1;Deletion:DeleteTable;attrName;attrType;iskey;0;-
+6;1237391769.sql;1237392520.sql;t3;Insertion:NewTable;attrName;attrType;iskey;0;-
+6;1237391769.sql;1237392520.sql;t4;Update:TypeChange;a41;VARCHAR;false;0;-
+7;1237392520.sql;1237471882.sql;t2;Deletion:DeleteTable;attrName;attrType;iskey;0;-
+8;1237471882.sql;1237481892.sql;t4;Insertion:UpdateTable;a42;BOOLEAN;false;0;-
+9;1237481892.sql;1237572660.sql;t3;Deletion:UpdateTable;a31;FLOAT;false;0;-
+10;1237572660.sql;1237572808.sql;t4;Deletion:DeleteTable;attrName;attrType;iskey;0;-
